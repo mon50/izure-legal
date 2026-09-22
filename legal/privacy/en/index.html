@@ -17,7 +17,7 @@
   - "Delete All" behaviour: src/adapters/storage/drizzle-storage-adapter.ts:1223-1260 (physical delete + VACUUM)
   - Purge of rows left by earlier versions: 0018_purge_soft_deleted_rows in src/adapters/storage/migrations.ts
   - Cancelling scheduled notifications: src/features/today/delete-all-flow.ts
-  - URL fetching: ai-backend/url-context.ts / ai-backend/robots.ts
+  - URL fetching: ai-backend/url-context.ts
   - Share sheet: plugins/with-share-receiver.cjs / src/features/share/share-inbox.ts
   - Billing: src/billing/revenuecat-billing-adapter.ts
 
@@ -261,11 +261,11 @@
         <li>The amount of text retrieved is capped (about 1,200 characters when placing a ticket; up to 24,000 characters when generating reading material).</li>
         <li>If the destination does not respond, or the content is neither HTML nor plain text, no retrieval takes place and processing continues without it.</li>
         <li>No retrieval is attempted for localhost, private IP addresses, or non-standard ports.</li>
-        <li>For X (formerly Twitter) we use the public syndication endpoint, and for YouTube the public oEmbed endpoint.</li>
+        <li>For X (formerly Twitter) we use the public syndication endpoint, falling back to the public oEmbed endpoint if it returns nothing; for YouTube we use the public oEmbed endpoint.</li>
         <li>Retrieved page content is not stored on our server.</li>
       </ul>
 
-      <h3>3.3 What Our Server Identifies Itself As When Fetching, and Our Treatment of robots.txt</h3>
+      <h3>3.3 What Our Server Identifies Itself As When Fetching, and the Scope of Fetching</h3>
       <p>
         When making the fetches described in §3.2, our server sends the following name (the HTTP
         User-Agent header) to the destination site. <strong>It never identifies itself as another
@@ -276,18 +276,27 @@
         The URL in parentheses is this App's legal information page. It is included so that the
         administrator of the destination site can see where the request came from and contact us.
       </p>
-      <p>Whether a page may be fetched is governed by the destination site's robots.txt.</p>
+      <p>We fetch only within the following limits.</p>
       <ul>
-        <li>Before fetching a page, we retrieve <code>/robots.txt</code> from the destination host.</li>
-        <li>We follow the group addressed to <code>Izure</code> if one is present, and otherwise the group addressed to <code>*</code>. If the page in question is disallowed, we do not fetch it.</li>
-        <li>If robots.txt does not exist (a 404, for example), or if we are unable to retrieve it, we treat the host as imposing no restriction and proceed with the fetch.</li>
-        <li>So as not to request robots.txt repeatedly from the same host, what we read is held in our server's working memory for ten minutes. It contains no information about you.</li>
-        <li>The same treatment applies to the X syndication endpoint and the YouTube oEmbed endpoint described in §3.2.</li>
+        <li><strong>We fetch only URLs that you have placed.</strong> We make no fetch that does not originate from your own action.</li>
+        <li><strong>We fetch each URL once.</strong> The outcome is kept on your device, and we do not fetch the same URL again and again.</li>
+        <li><strong>We do not crawl.</strong> We never follow links contained in a page we have fetched.</li>
+        <li>We do not fetch destinations on localhost, private IP addresses, or non-standard ports (§3.2).</li>
       </ul>
       <p>
-        Where the content of a page cannot be retrieved — because robots.txt disallows it, because a
-        login is required, or for any other reason — we continue without that content. If there is
-        not enough material to generate reading material, the App tells you so on screen.
+        We do not consult the destination site's robots.txt. RFC 9309 defines robots.txt as a
+        mechanism addressed to "automatic clients known as crawlers", and states that "these rules
+        are not a form of access authorization". As set out above, our fetching is not crawling: it
+        retrieves a single URL that you placed yourself, once, at your request.
+      </p>
+      <p>
+        If you administer a destination site and would prefer that we not fetch from it, please tell
+        us at the contact point in §9 and we will stop fetching from that site.
+      </p>
+      <p>
+        Where the content of a page cannot be retrieved — because a login is required, because the
+        page has been removed, or for any other reason — we continue without that content. If there
+        is not enough material to generate reading material, the App tells you so on screen.
       </p>
 
       <h2>4. Third-Party Processors and International Transfers</h2>
@@ -401,7 +410,13 @@
       </ul>
       <p>
         Deleting rows alone can leave the text inside unused space in the database file. The App therefore
-        rewrites the database file after the deletion, so that the text is gone from the file as well.
+        overwrites with zeros the space a row occupied at the moment that row is deleted.
+      </p>
+      <p>
+        In addition, after a deletion the App rewrites the database file itself so that the unused space is
+        reclaimed. This rewrite can fail — for example when there is not enough free space on the device. If
+        it fails, the App tries again at the next deletion. Even when the rewrite does not happen, the space
+        the deleted rows occupied has already been overwritten with zeros, as described above.
       </p>
       <p>
         Versions released before 22 September 2026 marked ticket text, titles and summaries as deleted
@@ -514,7 +529,7 @@
       <footer class="revisions">
         <strong>Revision history</strong>
         <ul>
-          <li>2026-09-22: Full revision for the rename to Izure and the introduction of paid plans. Reorganised the transmitted-data disclosure around the three operations the implementation actually performs — placing a ticket, opening a ticket to generate reading material, and generating "seeds" — and newly disclosed the transmission of other tickets' titles and identifiers and of checkpoints (§1.2), the anonymous device identifier and plan type (§1.3), receiving content via the share sheet (§1.5), and our server's retrieval of pages behind the URLs you place (§3.2). Stated in §3.3 that our server identifies itself as Izure when it fetches, and that it checks robots.txt beforehand and does not fetch pages that are disallowed (previously it identified itself as another company's crawler to certain sites and did not consult robots.txt). Removed the statements about sending conversation history, memory summaries and images, as the current version sends none of these. Added that OpenAI may retain abuse-monitoring records for up to 30 days (§4.2). Rewrote §5.3 in full to match the implementation: previously "Delete All" only marked the ticket text, titles and summaries as deleted, leaving those rows inside the on-device database file; from this version the rows are deleted outright and the database file is rewritten, and rows left behind by the earlier versions are deleted the first time the App starts after the update. Also added that "Delete All" cancels scheduled notifications. Aligned §1.1 and §6 on the fact that no app-level encryption is applied to the SQLite database, and corrected the statements about camera, photo library and notification permissions to match the implementation. Added the GDPR Art. 6(1)(b) legal basis, the Art. 20 portability item, and the reference to Standard Contractual Clauses. Unified the operator name as Sota Sugiyama.</li>
+          <li>2026-09-22: Full revision for the rename to Izure and the introduction of paid plans. Reorganised the transmitted-data disclosure around the three operations the implementation actually performs — placing a ticket, opening a ticket to generate reading material, and generating "seeds" — and newly disclosed the transmission of other tickets' titles and identifiers and of checkpoints (§1.2), the anonymous device identifier and plan type (§1.3), receiving content via the share sheet (§1.5), and our server's retrieval of pages behind the URLs you place (§3.2). Stated in §3.3 that our server identifies itself as Izure when it fetches (previously it identified itself as another company's crawler to certain sites). Revised §3.3 again the same day to state that we do not consult robots.txt, to set out the limits that underpin that position (only URLs you place, once per URL, no crawling), and to offer site administrators a way to ask us to stop fetching from their site. Removed the statements about sending conversation history, memory summaries and images, as the current version sends none of these. Added that OpenAI may retain abuse-monitoring records for up to 30 days (§4.2). Rewrote §5.3 in full to match the implementation: previously "Delete All" only marked the ticket text, titles and summaries as deleted, leaving those rows inside the on-device database file; from this version the rows are deleted outright, the space they occupied is overwritten with zeros, and the database file is rewritten; rows left behind by the earlier versions are deleted the first time the App starts after the update. Stated that the rewrite can fail and is then retried at the next deletion. Also added that "Delete All" cancels scheduled notifications. Aligned §1.1 and §6 on the fact that no app-level encryption is applied to the SQLite database, and corrected the statements about camera, photo library and notification permissions to match the implementation. Added the GDPR Art. 6(1)(b) legal basis, the Art. 20 portability item, and the reference to Standard Contractual Clauses. Unified the operator name as Sota Sugiyama.</li>
           <li>2026-06-06: Revised for the launch of the paid plan (Tsumu Pro subscription). Added §1.4 "Purchase and Subscription Information" and added RevenueCat as a processor. Changed the AI model reference to a version-agnostic description. Also, for the new image-input feature, disclosed on-device storage and server transmission of attached images (§1.1 / §1.2).</li>
           <li>2026-05-26: Initial publication.</li>
         </ul>
