@@ -1,0 +1,246 @@
+/*
+  Izure 法務ページ共有スタイル。
+  数値の正は aidlc-docs/design/worldview-reset/03_izure-identity.md（紙 #F6F5F2 / 藍黒 #14162B / 青 #3A4FD9）。
+  紙は 1 枚。面を重ねず、線で分ける。影・グラデーション・2 色目は無い。
+  青は「まだ来ていないもの」＝ここではリンクにだけ使う。
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500&family=Space+Grotesk:wght@400;500&display=swap");
+
+:root {
+  --paper: #f6f5f2;
+  --ink: #14162b;
+  --ink70: #14162bb3;
+  --ink60: #14162b99;
+  --ink45: #14162b73;
+  --ink12: #14162b1f;
+  --blue: #3a4fd9;
+  --font-body: "Zen Kaku Gothic New", -apple-system, "Hiragino Sans", "Yu Gothic", "Segoe UI",
+    sans-serif;
+  --font-meta: "Space Grotesk", -apple-system, "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.85;
+  -webkit-text-size-adjust: 100%;
+}
+
+main.legal {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 24px 72px;
+}
+
+/* 頭: アプリの名前と、どの文書か。下に細い線 1 本で本文と分ける */
+header.head {
+  border-bottom: 1px solid var(--ink12);
+  padding-bottom: 18px;
+  margin-bottom: 34px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+header.head .mark {
+  font-family: var(--font-meta);
+  font-weight: 500;
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  color: var(--ink70);
+  display: block;
+  margin-bottom: 10px;
+}
+
+header.head h1 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.45;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+header.head .sub {
+  font-family: var(--font-meta);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink60);
+  margin-top: 8px;
+}
+
+/* ja | en。いま見ているほうだけ濃い */
+nav.lang {
+  font-family: var(--font-meta);
+  font-size: 13px;
+  color: var(--ink45);
+}
+
+nav.lang a {
+  color: var(--ink45);
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+nav.lang a.active {
+  color: var(--ink);
+}
+
+nav.lang a:hover {
+  color: var(--ink70);
+}
+
+main.legal h2 {
+  font-size: 17px;
+  margin-top: 40px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+main.legal h3 {
+  font-size: 15px;
+  margin-top: 24px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: var(--ink70);
+}
+
+main.legal p,
+main.legal li {
+  font-size: 15px;
+  color: var(--ink);
+}
+
+main.legal ul,
+main.legal ol {
+  padding-left: 22px;
+}
+
+main.legal li {
+  margin: 5px 0;
+}
+
+main.legal strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+main.legal a {
+  color: var(--blue);
+  text-decoration: none;
+  border-bottom: 1px solid var(--blue);
+}
+
+main.legal a:hover {
+  border-bottom-color: transparent;
+}
+
+main.legal code {
+  font-family: "SF Mono", Menlo, Consolas, monospace;
+  font-size: 13px;
+  color: var(--ink70);
+  border: 1px solid var(--ink12);
+  padding: 1px 6px;
+  border-radius: 2px;
+}
+
+/* 表（特商法の表示事項など）。枠で囲わず、横の線だけで行を分ける */
+main.legal table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 18px 0;
+  font-size: 15px;
+}
+
+main.legal th,
+main.legal td {
+  text-align: left;
+  vertical-align: top;
+  padding: 12px 10px 12px 0;
+  border-bottom: 1px solid var(--ink12);
+}
+
+main.legal th {
+  width: 30%;
+  font-weight: 500;
+  color: var(--ink70);
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  main.legal th,
+  main.legal td {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border-bottom: none;
+  }
+  main.legal th {
+    padding-top: 14px;
+    font-size: 13px;
+  }
+  main.legal td {
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--ink12);
+  }
+}
+
+footer.revisions {
+  margin-top: 56px;
+  padding-top: 20px;
+  border-top: 1px solid var(--ink12);
+  font-size: 13px;
+  color: var(--ink60);
+}
+
+footer.revisions strong {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--ink70);
+}
+
+footer.revisions ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+footer.revisions li {
+  margin: 4px 0;
+}
+
+footer.bottom {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--ink12);
+  font-family: var(--font-meta);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink45);
+  text-align: center;
+}
+
+@media (max-width: 480px) {
+  main.legal {
+    padding: 28px 18px 56px;
+  }
+  header.head h1 {
+    font-size: 21px;
+  }
+}
