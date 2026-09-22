@@ -3,7 +3,7 @@
 Izure アプリの法的情報（プライバシーポリシー / 利用規約 / 特定商取引法に基づく表記）を
 GitHub Pages で公開するための静的サイト。
 
-正本は本体リポジトリ `tsumu`（private）の `docs/` 配下にあり、このリポジトリの
+正本は本体リポジトリ `izure`（private）の `docs/` 配下にあり、このリポジトリの
 `index.html` と `legal/` はそこから写したもの。**このリポジトリを直接編集しない。**
 
 旧 `mon50/tsumu-legal` の後継。Tsumu から Izure への改名に伴い公開先を移した。
@@ -25,7 +25,7 @@ ai-backend が URL 先のページを取りに行くときの User-Agent にも�
 
 ## 更新手順
 
-1. 本体 `tsumu` の `docs/` を編集・レビューする（正本）。
+1. 本体 `izure` の `docs/` を編集・レビューする（正本）。
 2. `docs/index.html` と `docs/legal/` をこのリポジトリへ写し、コミットして push する。
 3. 改訂の記録は各 HTML の改訂履歴に残す。運用ルールは本体の
    `aidlc-docs/operations/legal-revision-policy.md`。
