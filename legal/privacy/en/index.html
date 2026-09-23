@@ -21,6 +21,13 @@
   - Share sheet: plugins/with-share-receiver.cjs / src/features/share/share-inbox.ts
   - Billing: src/billing/revenuecat-billing-adapter.ts
 
+  - Video and image transcription (added 2026-09-23): ai-backend/media-reader.ts / worker/index.ts (Pro only)
+  Source: Gemini API Additional Terms of Service https://ai.google.dev/gemini-api/terms (checked 2026-09-23)
+  - Paid Services: prompts and responses are not used to improve Google's products; logged for a limited
+    period for abuse detection and required disclosures (no number of days is stated); may be stored
+    transiently or cached in any country where Google or its agents maintain facilities.
+  - Age Requirements: not for apps likely to be accessed by users under 18 → Terms §3 raised to 18+.
+
   The plan name "Izure Pro" is a placeholder; replace it everywhere once the final name is decided.
 -->
 <html lang="en">
@@ -37,7 +44,7 @@
         <div>
           <span class="mark">IZURE</span>
           <h1>Izure Privacy Policy</h1>
-          <div class="sub">Last updated: 2026-09-22 ・ Effective: 2026-09-22</div>
+          <div class="sub">Last updated: 2026-09-23 ・ Effective: 2026-09-23</div>
         </div>
         <nav class="lang">
           <a href="../ja/">ja</a>|
@@ -117,6 +124,12 @@
         Our server forwards what it receives to the OpenAI API (a large language model), obtains the
         generated result, and returns it to your device. Our server does not store what it receives.
         OpenAI's handling is described in §4.2.
+      </p>
+      <p>
+        When a Pro subscriber turns a YouTube video, or an X post with images or videos, into reading
+        material, our server passes the video's URL, or the images and videos attached to the post, to
+        Google's Gemini API, which transcribes their content into text. That text is then passed to the
+        OpenAI API as material for the reading (§3.2). Google's handling is described in §4.3.
       </p>
       <p>
         <strong>What we do not send</strong>: the App does not send your conversation history with the AI,
@@ -262,7 +275,14 @@
         <li>If the destination does not respond, or the content is neither HTML nor plain text, no retrieval takes place and processing continues without it.</li>
         <li>No retrieval is attempted for localhost, private IP addresses, or non-standard ports.</li>
         <li>For X (formerly Twitter) we use the public syndication endpoint, falling back to the public oEmbed endpoint if it returns nothing; for YouTube we use the public oEmbed endpoint.</li>
-        <li>Retrieved page content is not stored on our server.</li>
+        <li>
+          <strong>Transcribing videos and images (Pro only)</strong>: only when a Pro subscriber generates
+          reading material, we pass a YouTube video's URL to Google's Gemini API, and Google reads the video
+          (up to the first 60 minutes). For images and videos attached to an X post, our server retrieves
+          them from X's media hosts (pbs.twimg.com / video.twimg.com) and passes them to the Gemini API
+          (videos of 10 minutes or less). No transcription happens when you place a ticket.
+        </li>
+        <li>Retrieved page content, images, videos, and transcribed text are not stored on our server.</li>
       </ul>
 
       <h3>3.3 What Our Server Identifies Itself As When Fetching, and the Scope of Fetching</h3>
@@ -315,6 +335,14 @@
           </ul>
         </li>
         <li>
+          <strong>Google LLC</strong> (United States)
+          <ul>
+            <li>Purpose: transcribing the content of YouTube videos and of images and videos attached to X posts (Pro only).</li>
+            <li>Information transferred: the YouTube video's URL, or the images and videos attached to an X post together with the post's text. Your ticket text, checkpoints, and identifiers are not included.</li>
+            <li>Handling is described in §4.3.</li>
+          </ul>
+        </li>
+        <li>
           <strong>Cloudflare, Inc.</strong> (United States)
           <ul>
             <li>Purpose: hosting our stateless server (Cloudflare Workers).</li>
@@ -360,10 +388,24 @@
         those abuse-monitoring records.
       </p>
 
-      <h3>4.3 International Transfers</h3>
+      <h3>4.3 Data Handling at Google</h3>
+      <p>
+        According to Google's Gemini API Additional Terms of Service, for paid use, content sent through
+        the API and the responses it generates are not used to improve Google's products. We use the
+        Gemini API as a paid service.
+      </p>
+      <p>
+        However, <strong>Google logs prompts and responses for a limited period, solely to detect and
+        prevent violations of its Prohibited Use Policy and for required legal or regulatory
+        disclosures</strong>. The terms do not state the number of days. Content may also be stored
+        transiently or cached in any country where Google or its agents maintain facilities.
+      </p>
+
+      <h3>4.4 International Transfers</h3>
       <p>
         The processors above are located in the United States. In addition, Cloudflare Workers runs at edge
         locations worldwide, so the country in which processing occurs varies from request to request.
+        Google's processing may take place in the countries described in §4.3.
       </p>
       <p>
         Transfers from the European Economic Area (EEA) and the United Kingdom to the United States rely on
@@ -453,7 +495,7 @@
       <ul>
         <li>
           <strong>Encryption in transit</strong>: traffic between your device and our server, between our
-          server and OpenAI, and between our server and the destination sites described in §3.2, all uses
+          server and OpenAI or Google, and between our server and the destination sites described in §3.2, all uses
           HTTPS (TLS).
         </li>
         <li>
@@ -529,6 +571,7 @@
       <footer class="revisions">
         <strong>Revision history</strong>
         <ul>
+          <li>2026-09-23: [Material] Added Google LLC (Gemini API) as a processor, to transcribe YouTube videos and the images and videos in X posts for Pro (§1.2, §3.2, §4.1, §4.3). International transfers moved to §4.4.</li>
           <li>2026-09-22: Initial publication.</li>
         </ul>
       </footer>

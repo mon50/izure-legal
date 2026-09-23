@@ -23,7 +23,7 @@
         <div>
           <span class="mark">IZURE</span>
           <h1>Terms of Service</h1>
-          <div class="sub">Last updated: 2026-09-22 ・ Effective: 2026-09-22</div>
+          <div class="sub">Last updated: 2026-09-23 ・ Effective: 2026-09-23</div>
         </div>
         <nav class="lang">
           <a href="../ja/">ja</a>|
@@ -79,7 +79,8 @@
         <li>Setting down slips, reading them again, adding to them, and deleting them.</li>
         <li>
           Opening a slip to generate a piece of writing. At no charge, the App shows that writing up to
-          its first section, and no writing can be generated for a slip set down more than 30 days ago.
+          its first section, and no writing can be generated for a slip set down more than 30 days ago,
+          for a YouTube video, or for an X post with images or videos.
         </li>
         <li>
           Choosing when a slip should notify you. At no charge, the choices are limited to the presets
@@ -97,8 +98,21 @@
           at no charge.
         </li>
         <li>Generating writing for slips set down more than 30 days ago.</li>
+        <li>
+          Generating writing from the content of YouTube videos and of images and videos attached to X
+          posts. Videos are handled up to their first 60 minutes (X videos of 10 minutes or less). Videos
+          that are not public, and images or videos that cannot be retrieved, are not supported. X
+          articles and long posts are limited to the opening portion that can be retrieved publicly, and
+          no writing is generated from articles.
+        </li>
         <li>Setting the notification time freely, by date and time.</li>
       </ul>
+      <p>
+        Retrieval of videos, images, and posts depends on what YouTube and X make publicly available. If a
+        source service changes its specifications, what can be retrieved may change without notice. We do
+        not guarantee what can be retrieved, but we will update this section once we become aware of such
+        a change.
+      </p>
       <p>
         To keep server load and cost within reasonable limits, we set caps on how many times the
         AI-backed features may be used per short interval, per day, and per calendar month. The caps
@@ -111,9 +125,9 @@
       <ul>
         <li>You must comply with these Terms and all applicable laws when using the App.</li>
         <li>
-          The App is intended for users who are at least 13 years old (or the minimum age at which you
-          can validly consent to the processing of personal information in your jurisdiction). Purchases
-          by minors are addressed in §9.
+          <!-- 2026-09-23: 13 → 18. The Gemini API Additional Terms (Age Requirements) prohibit use in apps likely to be accessed by users under 18. -->
+          The App is intended for users aged 18 or older. If you are under 18, you may not use the App.
+          Purchases by minors are addressed in §9.
         </li>
         <li>
           You are responsible for the device, network, electricity, internet connection, and any other
@@ -127,6 +141,8 @@
         <li>
           If you set down a URL pointing to a third party's post, article, or work, our server accesses
           that URL and sends the retrieved title and text to the OpenAI API as material for the writing.
+          When the Plan is used to generate writing from videos or images, the video's URL or the images
+          and videos are sent to Google's Gemini API.
           You set down such URLs on the basis that doing so stays within your own private record-keeping
           and does not conflict with the terms of the service the content comes from.
         </li>
@@ -183,8 +199,9 @@
           <a href="../../privacy/en/">Privacy Policy</a>).
         </li>
         <li>
-          The App generates its writing through the OpenAI API. Rights in those outputs are governed by
-          OpenAI's terms of service.
+          The App generates its writing through the OpenAI API (videos and images are transcribed through
+          Google's Gemini API). Rights in those outputs are governed by the terms of service of OpenAI and
+          Google.
         </li>
       </ul>
 
@@ -345,6 +362,7 @@
       <footer class="revisions">
         <strong>Revision history</strong>
         <ul>
+          <li>2026-09-23: Raised the minimum age from 13 to 18 (§3). Added generating writing from YouTube videos and from images and videos in X posts to the Plan, noting that X articles and long posts are limited to their opening and that what can be retrieved may change with the source's specifications (§2). Added that videos and images are transcribed through Google's Gemini API (§4, §6).</li>
           <li>2026-09-22: Initial publication.</li>
         </ul>
       </footer>

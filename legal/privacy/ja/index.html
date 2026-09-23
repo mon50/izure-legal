@@ -20,6 +20,16 @@
   - 共有シート: plugins/with-share-receiver.cjs / src/features/share/share-inbox.ts
   - 課金: src/billing/revenuecat-billing-adapter.ts
 
+  - 動画・画像の書き起こし（2026-09-23 追加）: ai-backend/media-reader.ts（Gemini generateContent。
+    YouTube は URL を fileData で渡し endOffset 3600s、X は syndication の mediaDetails を
+    pbs.twimg.com / video.twimg.com から取って inlineData で渡す）/ worker/index.ts（Pro だけ。free は locked）
+  出典: Gemini API Additional Terms of Service https://ai.google.dev/gemini-api/terms （2026-09-23 確認）
+  - Paid Services: "Google doesn't use your prompts ... or responses to improve our products"
+  - "Google logs prompts and responses for a limited period of time, solely for detecting and preventing
+    violations of the Prohibited Use Policy and any required legal or regulatory disclosures."（日数の明記なし）
+  - "may be stored transiently or cached in any country in which Google or its agents maintain facilities"
+  - Age Requirements: 18 歳未満が使う見込みのあるアプリでの利用を禁じる → 利用規約 §3 を 18 歳以上に改めた
+  運用上の前提: Gemini の鍵は課金を有効にした Cloud プロジェクトで発行する（Unpaid Services は学習に使われうる）。
   プラン名「Izure Pro」は仮置き。確定後に一括で差し替える。
 -->
 <html lang="ja">
@@ -36,7 +46,7 @@
         <div>
           <span class="mark">IZURE</span>
           <h1>Izure プライバシーポリシー</h1>
-          <div class="sub">最終更新日: 2026-09-22 ・ 適用開始日: 2026-09-22</div>
+          <div class="sub">最終更新日: 2026-09-23 ・ 適用開始日: 2026-09-23</div>
         </div>
         <nav class="lang">
           <a href="../ja/" class="active">ja</a>|
@@ -97,6 +107,9 @@
       <p>
         当方のサーバーは、受け取った情報を OpenAI 社の API（大規模言語モデル）へ転送し、生成された結果を利用者の端末へ返します。当方のサーバーは受け取った内容を保存しません。
         OpenAI 社における取り扱いは §4.2 に記載します。
+      </p>
+      <p>
+        本プランの利用者が、YouTube の動画、または画像・動画の付いた X の投稿を読み物にするときは、当方のサーバーが、その動画の URL、または投稿に付いた画像・動画を Google 社の Gemini API へ渡し、中身を文に書き起こします。書き起こした文は、読み物の材料として OpenAI 社の API へ渡されます（§3.2）。Google 社における取り扱いは §4.3 に記載します。
       </p>
       <p>
         <strong>送信しないもの</strong>: 本アプリは、利用者と AI とのやりとりの履歴、過去に保存した記録の要約、および画像を、サーバーへ送信しません。
@@ -210,7 +223,10 @@
         <li>取得先が応答しない場合、内容が HTML またはプレーンテキストでない場合、取得は行わずに処理を続けます。</li>
         <li>宛先が localhost やプライベート IP アドレス、標準以外のポートである場合、取得を行いません。</li>
         <li>X（旧 Twitter）については公開の syndication エンドポイント（取得できない場合は公開の oEmbed エンドポイント）、YouTube については公開の oEmbed エンドポイントを用います。</li>
-        <li>取得したページの内容は、当方のサーバーには保存されません。</li>
+        <li>
+          <strong>動画・画像の書き起こし（本プランのみ）</strong>: 本プランの利用者が読み物を生成するときに限り、YouTube の動画については、その URL を Google 社の Gemini API へ渡し、Google 社が動画を読み込みます（最初の 60 分まで）。X の投稿に付いた画像・動画については、当方のサーバーが X の配信元（pbs.twimg.com / video.twimg.com）から取得して Gemini API へ渡します（動画は 10 分以内のものに限ります）。半券を置くときには、書き起こしは行いません。
+        </li>
+        <li>取得したページの内容、画像・動画、および書き起こした文は、当方のサーバーには保存されません。</li>
       </ul>
 
       <h3>3.3 URL の取得にあたって当方のサーバーが名乗る情報と、取得の範囲</h3>
@@ -254,6 +270,14 @@
           </ul>
         </li>
         <li>
+          <strong>Google LLC</strong>（所在地: アメリカ合衆国）
+          <ul>
+            <li>用途: YouTube の動画、および X の投稿に付いた画像・動画の中身を文に書き起こすこと（本プランのみ）。</li>
+            <li>転送される情報: YouTube の動画の URL、または X の投稿に付いた画像・動画と投稿の文。半券の本文、「判」、識別子は含まれません。</li>
+            <li>取り扱いの詳細は §4.3。</li>
+          </ul>
+        </li>
+        <li>
           <strong>Cloudflare, Inc.</strong>（所在地: アメリカ合衆国）
           <ul>
             <li>用途: 当方のサーバー（Cloudflare Workers）の実行基盤。</li>
@@ -292,9 +316,17 @@
         当方は現時点で、この監視記録の対象から除外される Zero Data Retention（ゼロデータ保持）の適用を受けていません。
       </p>
 
-      <h3>4.3 外国にある第三者への提供</h3>
+      <h3>4.3 Google 社におけるデータの取り扱い</h3>
       <p>
-        上記処理者はいずれもアメリカ合衆国に所在します。また Cloudflare Workers は世界各地のエッジで実行されるため、処理が行われる国は要求ごとに異なります。
+        Google 社が公開する Gemini API の追加利用規約によれば、有料の利用においては、API を通じて送信された内容と生成された結果は、同社の製品の改善には利用されません。当方は有料の利用として Gemini API を用いています。
+      </p>
+      <p>
+        一方で、<strong>同社は、禁止された利用の検知・防止と、法令上必要な開示のために、やりとりの記録を一定期間保持します</strong>。同規約はこの期間の日数を定めていません。また、送信された内容は、同社またはその委託先が設備を置くいずれかの国で、一時的に保存またはキャッシュされることがあります。
+      </p>
+
+      <h3>4.4 外国にある第三者への提供</h3>
+      <p>
+        上記処理者はいずれもアメリカ合衆国に所在します。また Cloudflare Workers は世界各地のエッジで実行されるため、処理が行われる国は要求ごとに異なります。Google 社の処理は、§4.3 のとおり同社が設備を置く国で行われることがあります。
       </p>
       <p>
         欧州経済領域（EEA）および英国から米国への移転については、各処理者が定める標準契約条項（Standard Contractual Clauses, GDPR Art. 46）またはこれと同等の仕組みに基づきます。各社が講じる保護措置の詳細は、それぞれのプライバシーポリシーをご確認ください。
@@ -360,7 +392,7 @@
       <!-- 個人情報保護法 第 23 条（安全管理措置）-->
       <ul>
         <li>
-          <strong>通信の暗号化</strong>: 端末と当方のサーバーの間、当方のサーバーと OpenAI 社の間、および当方のサーバーと §3.2 の宛先サイトの間の通信は、いずれも HTTPS（TLS）で暗号化します。
+          <strong>通信の暗号化</strong>: 端末と当方のサーバーの間、当方のサーバーと OpenAI 社・Google 社の間、および当方のサーバーと §3.2 の宛先サイトの間の通信は、いずれも HTTPS（TLS）で暗号化します。
         </li>
         <li>
           <strong>端末内データの保護</strong>: 半券と読み物は端末内の SQLite データベースに保存されます。
@@ -425,6 +457,7 @@
       <footer class="revisions">
         <strong>改訂履歴</strong>
         <ul>
+          <li>2026-09-23: 【重大変更】第三者処理者に Google LLC（Gemini API）を追加。本プランで YouTube の動画と X の投稿の画像・動画を書き起こすため（§1.2・§3.2・§4.1・§4.3）。外国への提供を §4.4 に移した。</li>
           <li>2026-09-22: 初版公開</li>
         </ul>
       </footer>
