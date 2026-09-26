@@ -8,6 +8,10 @@
   - Act on Specified Commercial Transactions, Arts. 11 and 12-6 (subscription disclosure)
   - Code of Civil Procedure, Arts. 3-7(5) and 11 (limits on jurisdiction agreements in consumer contracts)
   - Apple App Store Review Guidelines 3.1.2 / 5.1.1, Google Play Developer Policy (subscriptions)
+
+  2026-09-26 (direction B): reading material, dig, fading (slips older than 30 days) and video/image transcription were removed.
+  The Plan's contents match the five paywall benefits (src/i18n/catalog/en.ts paywall.benefit*).
+  The 18+ age in §3 is kept even though Gemini no longer processes user data (lowering it is the author's call).
 -->
 <html lang="en">
   <head>
@@ -23,7 +27,7 @@
         <div>
           <span class="mark">IZURE</span>
           <h1>Terms of Service</h1>
-          <div class="sub">Last updated: 2026-09-23 ・ Effective: 2026-09-23</div>
+          <div class="sub">Established: 2026-09-26 ・ Effective: 2026-09-26</div>
         </div>
         <nav class="lang">
           <a href="../ja/">ja</a>|
@@ -48,9 +52,12 @@
           again after time has passed.
         </li>
         <li>
-          When you open a slip, our server generates a piece of writing with the help of AI. If the slip
-          contains a URL, our server accesses that URL to retrieve its title and text and uses them as
-          material for that writing. The retrieval is performed by our server, not by your device.
+          When you set down a slip, our server uses AI to give it a title and to pick earlier slips about
+          the same thing. When you open a slip with a URL, the App shows short pointers to look at before
+          you go and read it (what it is about, things to look for, and questions for after reading). They
+          are not a summary of the page; the original at the link is where you check the content. For
+          these purposes our server accesses the URL to retrieve its title and text. The retrieval is
+          performed by our server, not by your device.
         </li>
         <li>
           On Android, you can pass text and URLs to the App from another app's share menu. What we
@@ -62,7 +69,7 @@
           entirely on your device; we do not send them to you individually.
         </li>
         <li>
-          Slips and their generated writing are stored in a database on your device. Our server does not
+          Slips, and what the App generates for them, are stored in a database on your device. Our server does not
           store the content. There is no cross-device sync and no cloud backup. See the
           <a href="../../privacy/en/">Privacy Policy</a> for details.
         </li>
@@ -76,12 +83,19 @@
       <h2>2. What Is Free, and What "Izure Pro" Unlocks</h2>
       <p>The following are available at no charge:</p>
       <ul>
-        <li>Setting down slips, reading them again, adding to them, and deleting them.</li>
         <li>
-          Opening a slip to generate a piece of writing. At no charge, the App shows that writing up to
-          its first section, and no writing can be generated for a slip set down more than 30 days ago,
-          for a YouTube video, or for an X post with images or videos.
+          Setting down slips, reading them again, adding to them, and deleting them. Slips do not become
+          unavailable because of how long ago they were set down.
         </li>
+        <li>
+          Opening a slip with a URL to see the pointers before reading. For links whose content we cannot
+          see (§4), the App shows questions for you instead.
+        </li>
+        <li>
+          "Seeds" for slips set down in your own words, and picking earlier slips about the same thing when
+          you set down a slip.
+        </li>
+        <li>Stacking slips on another slip to group them (a "stack").</li>
         <li>
           Choosing when a slip should notify you. At no charge, the choices are limited to the presets
           offered by the App (in an hour, tonight, tomorrow).
@@ -92,40 +106,43 @@
       </ul>
       <p>Purchasing the paid plan "Izure Pro" (the "Plan") unlocks the following:</p>
       <ul>
-        <li>The remaining sections of the writing, which are folded away at no charge.</li>
         <li>
-          Combining several slips into a single piece of writing (a "stack"). Stacks cannot be created
-          at no charge.
+          Ask to find: type what you are looking for in a sentence, and the App shows matching slips from
+          those you have set down, each with a one-line reason.
         </li>
-        <li>Generating writing for slips set down more than 30 days ago.</li>
         <li>
-          Generating writing from the content of YouTube videos and of images and videos attached to X
-          posts. Videos are handled up to their first 60 minutes (X videos of 10 minutes or less). Videos
-          that are not public, and images or videos that cannot be retrieved, are not supported. X
-          articles and long posts are limited to the opening portion that can be retrieved publicly, and
-          no writing is generated from articles.
+          Finding related articles from outside for a stack: the App searches the web based on the stack's
+          titles and similar, and shows up to three articles it has confirmed can be opened, each with one
+          line showing how it connects to the stack. It also shows, for each slip in a stack, one line on
+          how it connects to the stack's base. Searches have a monthly limit.
         </li>
+        <li>
+          Export: turn the slips you have set down and the words you wrote into plain text or Markdown and
+          hand them to another app through your device's share feature.
+        </li>
+        <li>Monthly review: shows the words you wrote in a month, grouped by topic.</li>
         <li>Setting the notification time freely, by date and time.</li>
       </ul>
       <p>
-        Retrieval of videos, images, and posts depends on what YouTube and X make publicly available. If a
-        source service changes its specifications, what can be retrieved may change without notice. We do
-        not guarantee what can be retrieved, but we will update this section once we become aware of such
-        a change.
+        Retrieval of pages and posts depends on what the source site or service makes publicly available
+        and on any instruction declining retrieval (<a href="../../privacy/en/">Privacy Policy</a> §3.3).
+        Instagram, Facebook, Threads and TikTok links are not retrieved. If a source changes its
+        specifications, what can be retrieved may change without notice. We do not guarantee what can be
+        retrieved, but we will update this section once we become aware of such a change.
       </p>
       <p>
         To keep server load and cost within reasonable limits, we set caps on how many times the
         AI-backed features may be used per short interval, per day, and per calendar month. The caps
         differ depending on whether you hold the Plan, and are set higher for Plan holders. When a cap is
         reached, that feature may be unavailable until the relevant period ends. We may change the values
-        of these caps; where a change is disadvantageous to Plan holders, we follow the procedure in §10.
+        of these caps; where a change is disadvantageous to Plan holders, we follow the procedure in §13.
       </p>
 
       <h2>3. Eligibility and Conditions of Use</h2>
       <ul>
         <li>You must comply with these Terms and all applicable laws when using the App.</li>
         <li>
-          <!-- 2026-09-23: 13 → 18. The Gemini API Additional Terms (Age Requirements) prohibit use in apps likely to be accessed by users under 18. -->
+          <!-- 2026-09-23: 13 → 18. The Gemini API Additional Terms (Age Requirements) prohibit use in apps likely to be accessed by users under 18. 2026-09-26: Gemini no longer processes user data; the age is kept pending the author's decision. -->
           The App is intended for users aged 18 or older. If you are under 18, you may not use the App.
           Purchases by minors are addressed in §9.
         </li>
@@ -140,9 +157,10 @@
         <li>You are responsible for the content of the text and URLs you set down as slips.</li>
         <li>
           If you set down a URL pointing to a third party's post, article, or work, our server accesses
-          that URL and sends the retrieved title and text to the OpenAI API as material for the writing.
-          When the Plan is used to generate writing from videos or images, the video's URL or the images
-          and videos are sent to Google's Gemini API.
+          that URL and sends the retrieved title and part of the text (for the pointers before reading, up
+          to the first 4,000 characters) to the OpenAI API as material for the title and for the pointers
+          before reading. The pointers are written so as not to copy sentences from the original, and any
+          part that repeats 20 or more consecutive characters of the original is not shown.
           You set down such URLs on the basis that doing so stays within your own private record-keeping
           and does not conflict with the terms of the service the content comes from.
         </li>
@@ -154,6 +172,11 @@
         <li>
           We are not responsible for the content or availability of the sites a URL points to, or for the
           accuracy of what is displayed from them.
+        </li>
+        <li>
+          For Instagram, Facebook, Threads and TikTok links, pages that require a login, pages that decline
+          retrieval, and pages that could not be retrieved ("links whose content we cannot see"), no page
+          content is used. Such slips are titled only by the service name and the words you write.
         </li>
       </ul>
 
@@ -194,14 +217,14 @@
           documentation) belong to us or the respective rights holders.
         </li>
         <li>
-          The text you set down, and the titles, summaries, and writing generated from it, remain yours.
+          The text you set down, and the titles, summaries, pointers before reading and other output generated from it, remain yours. Copyright in the third-party pages that output is based on remains with its holders.
           We will not use that data for any purpose beyond providing the service to you (see the
           <a href="../../privacy/en/">Privacy Policy</a>).
         </li>
         <li>
-          The App generates its writing through the OpenAI API (videos and images are transcribed through
-          Google's Gemini API). Rights in those outputs are governed by the terms of service of OpenAI and
-          Google.
+          The App produces titles, pointers before reading and other output through the OpenAI API, and
+          also uses that API for web search when finding from outside. Rights in those outputs are governed
+          by OpenAI's terms of service.
         </li>
       </ul>
 
@@ -220,9 +243,12 @@
           Terms limits liability that cannot be limited by law.
         </li>
         <li>
-          Anything the AI generates is probabilistic text and does not guarantee accuracy, expert advice,
-          or up-to-date information. <strong>Do not rely on it for medical, legal, tax, financial, or
-          safety-critical decisions.</strong>
+          Anything the AI generates (including titles, pointers before reading, questions, connecting
+          lines, search results and the monthly review) is probabilistic text and does not guarantee
+          accuracy, expert advice, or up-to-date information. Pointers before reading are short text the AI
+          writes from part of a page, and may get the content wrong; check the original at the link. We also
+          make no guarantee about the content or safety of articles found from outside. <strong>Do not rely
+          on any of it for medical, legal, tax, financial, or safety-critical decisions.</strong>
         </li>
         <li>
           The App relies on your device. We are not responsible for data loss caused by device failure,
@@ -263,7 +289,7 @@
         </li>
         <li>
           Whether a refund is available, and any procedure for it, follows Apple's or Google's refund
-          policy. In addition, you may raise refund questions with us at the contact in §13. We cannot
+          policy. In addition, you may raise refund questions with us at the contact in §15. We cannot
           reverse a store's charge ourselves, but we will hear you out and explain how to apply to the
           relevant store.
         </li>
@@ -277,7 +303,7 @@
         </li>
         <li>
           A purchase made without that consent may be rescinded in accordance with the law. Please
-          contact us at §13 in that case. The refund itself is processed by the relevant store.
+          contact us at §15 in that case. The refund itself is processed by the relevant store.
         </li>
       </ul>
 
@@ -312,7 +338,7 @@
       <ul>
         <li>You may stop using the App and uninstall it from your device at any time.</li>
         <li>
-          You can delete the slips and generated writing held on your device from the App's settings
+          You can delete the slips, and what the App has generated for them, held on your device from the App's settings
           screen. Because our server does not retain the content, no further action toward us is
           required. If you hold the Plan, deleting your data does not cancel the subscription (see §8).
         </li>
@@ -358,14 +384,15 @@
         <li>Operator: Sota Sugiyama (individual; handle: mon50)</li>
         <li>Email: <code>support@nichijo-update.com</code></li>
       </ul>
+      <p>
+        <strong>Enquiries and removal requests from rights holders</strong>: Copyright holders and
+        other rights holders may send enquiries or removal requests about content the App has
+        retrieved from a page (titles, opening lines and the short notes shown before reading) to
+        the email address above. After reviewing the request, we will take steps such as stopping
+        retrieval from the page or site concerned.
+      </p>
 
-      <footer class="revisions">
-        <strong>Revision history</strong>
-        <ul>
-          <li>2026-09-23: Raised the minimum age from 13 to 18 (§3). Added generating writing from YouTube videos and from images and videos in X posts to the Plan, noting that X articles and long posts are limited to their opening and that what can be retrieved may change with the source's specifications (§2). Added that videos and images are transcribed through Google's Gemini API (§4, §6).</li>
-          <li>2026-09-22: Initial publication.</li>
-        </ul>
-      </footer>
+      <footer class="revisions">Established September 26, 2026.</footer>
       <footer class="bottom">© Izure / Sota Sugiyama</footer>
     </main>
   </body>
