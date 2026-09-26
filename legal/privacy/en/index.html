@@ -80,6 +80,8 @@
         <li>The grouping relationships between tickets (called a "stack" in the App), and the one line showing how each ticket connects to the base of the stack (paid plan "Izure Pro" (the "Plan") only).</li>
         <li>Links between a newly placed ticket and earlier tickets picked as being about the same thing, with one line describing the connection.</li>
         <li>The reminder time you set on a ticket, the time you settled it, and its deletion state.</li>
+        <li>The times you opened the original page of a link ticket (used to show "what you did this month" in the monthly review; it does not include the page's content).</li>
+        <li>Monthly review results (the names and sizes of the month's topics, the numbers of the words picked, the question, and the one line drawn from that month's words), your answers to "Ask yourself", and a mark for each word you tapped "Let it go" or "Make it a to-do" on in the review (a short one-way mark, not the words themselves).</li>
       </ul>
       <p>
         This database is <strong>not</strong> encrypted by the App itself. Its protection relies on the disk
@@ -156,9 +158,12 @@
           many days ago it was placed, whether it is settled, and its identifier.
         </li>
         <li>
-          <strong>Monthly review</strong>: the words you wrote when placing tickets that month (text without
-          URLs) and your checkpoints, with their dates. Up to 200 entries, each up to 160 characters, are
-          passed to the AI.
+          <strong>Monthly review</strong> (Plan): the words you wrote when placing tickets that month (text without
+          URLs) and your checkpoints; the titles of the links you placed that month and the "what it is about"
+          line of their pointers (if already made); the date of each; and the names and sizes of last month's
+          topics, if the review for last month is kept on your device. Up to 200 entries, each up to 160
+          characters, are passed to the AI. To-dos and samples are not sent. The times you opened original pages
+          and your answers to "Ask yourself" are not sent.
         </li>
         <li>
           <strong>One line connecting a stack</strong>: the title of the stack's base and the note written
@@ -209,14 +214,7 @@
           body contains the title of the ticket. You can turn notifications off at any time in the App's
           settings.
         </li>
-        <li>
-          <strong>Photo library and camera</strong>: the App declares these permissions, and they therefore
-          appear in the store's permission listing. However,
-          <strong>the version as of 2026-09-26 contains no screen from which you can select or take a
-          photo</strong>. As a result, the permission prompts are never shown, and no image is sent to our
-          server. If a future version adds image handling, we will revise this Policy before releasing it.
-        </li>
-        <li><strong>Location, contacts, microphone, call logs</strong>: not declared and not collected.</li>
+        <li><strong>Photo library, camera, location, contacts, microphone, call logs</strong>: not declared and not collected. The App does not handle images.</li>
       </ul>
 
       <h3>1.5 Receiving Content From Other Apps (Share Sheet)</h3>
@@ -449,7 +447,7 @@
       <h2>5. Storage Locations and Retention</h2>
       <h3>5.1 On-Device Data</h3>
       <ul>
-        <li>Ticket text, titles, summaries, checkpoints, pointers before reading, questions, seeds, and stack and link relationships are stored only on your device.</li>
+        <li>Ticket text, titles, summaries, checkpoints, pointers before reading, questions, seeds, stack and link relationships, the times you opened original pages, and monthly review results and answers are stored only on your device.</li>
         <li>We do not unilaterally set a retention period. Tickets do not become unavailable because of how long ago they were placed.</li>
         <li>Uninstalling the App removes the on-device database and the share-holding file. Settings and identifiers held in the operating system's secure storage are removed in accordance with the operating system's behaviour.</li>
       </ul>
@@ -482,6 +480,7 @@
         <li>The ticket text, and the titles, summaries and search text the App assigned</li>
         <li>Theme labels, URL references (including page opening lines and similar), and references to attached images</li>
         <li>Checkpoints, pointers before reading, questions, "seeds," and stack and link relationships</li>
+        <li>The times you opened original pages, monthly review results, your answers to "Ask yourself", and the marks for words you tapped in the review</li>
       </ul>
       <p>
         Deleting rows alone can leave the text inside unused space in the database file. The App therefore
