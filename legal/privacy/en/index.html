@@ -224,16 +224,15 @@
 
       <h3>1.5 Receiving Content From Other Apps (Share Sheet)</h3>
       <p>
-        On Android, you can send text or a URL to the App from another app's share menu. When you do, the
-        App's own screen does not open; the shared string is held temporarily in a file on your device.
+        You can send text or a URL to the App from another app's share menu (iOS and Android). When you do, the
+        App's own screen does not open; the shared string is held temporarily in a file on your device (on iOS, in an on-device area shared by the App and its share-menu receiver).
         The next time you open or return to the App, that file is read, the content is saved as a ticket in
         the on-device database, and it is transmitted to our server as a "placing a ticket" operation under
         §1.2. Once read, the holding file is deleted.
       </p>
       <p>
         Where the sharing app supplies a subject line (Android's <code>EXTRA_SUBJECT</code>) that duplicates
-        the body, the App removes it. Only plain text is accepted; images are not. The iOS version does not
-        have this feature.
+        the body, the App removes it. Only text and URLs are accepted; images are not.
       </p>
       <p>
         If you share a third party's post or page, its content travels to our server and to OpenAI through
