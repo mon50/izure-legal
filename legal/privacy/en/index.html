@@ -199,6 +199,11 @@
         <li><strong>Your current plan type</strong> (free or paid), used to decide which limits apply and whether Plan features are available.</li>
         <li><strong>Your device's display language</strong> (Japanese or English), used to choose the language the AI writes in and the language preference sent to sites when retrieving pages.</li>
         <li>
+          <strong>A per-request ID</strong>: a random value the App creates for each request. It is used only
+          to match our server's logs with the diagnostic information in §1.7. It is separate from the device
+          identifier, changes with every request, and is not linked to you.
+        </li>
+        <li>
           <strong>An access token shared by all installations of the App</strong>. It lets our server confirm
           that a request comes from the App. It is not unique per User and contains no information that
           identifies you.
@@ -254,11 +259,38 @@
         The App has no sign-in; your purchase is tied to your store account. We do not offer a free trial.
       </p>
 
-      <h3>1.7 Information We Do Not Collect</h3>
+      <h3>1.7 Diagnostic Information When Something Fails</h3>
+      <p>
+        When an operation in §1.2 fails (our server could not be reached, the response took too long, the
+        response was cut off partway, an error was returned, and so on), the App creates diagnostic
+        information so that we can find the cause, and sends it to our server. Because a failure often means
+        the server cannot be reached, the App first keeps this information on your device (up to 50 entries;
+        beyond that, the oldest are discarded) and sends it the next time a request to our server succeeds,
+        or when the App starts. Entries are removed from your device once sent.
+      </p>
+      <p>Diagnostic information contains only the following:</p>
+      <ul>
+        <li>Which kind of operation failed (placing a ticket, reading it again, pointers before reading, ask to find, the connecting line of a stack, finding from outside, the monthly review, seeds, and so on)</li>
+        <li>The kind of reason, from a fixed set (busy, limit reached, Plan required, could not connect, timed out, malformed response, cut off partway, etc.)</li>
+        <li>Where it stopped (connecting / waiting for the response / while receiving) and how long it took</li>
+        <li>The App version, the operating system and its version, and your plan type (free or paid)</li>
+        <li>The domain name of the site involved (for example <code>example.com</code>). The URL's path, query and anything after "#" are not included</li>
+        <li>The per-request ID (§1.3)</li>
+      </ul>
+      <p>
+        <strong>Not included</strong>: the text, title or note of any ticket, checkpoints, questions or any
+        words you wrote, any part of a URL other than the domain name, the anonymous device identifier, and
+        the RevenueCat in-app user ID. Before sending, the App checks again that only the fixed items are
+        present; our server performs the same check on receipt and discards anything else. Diagnostic
+        information is not linked to you and is not used for tracking (following you across other
+        companies' apps or websites).
+      </p>
+
+      <h3>1.8 Information We Do Not Collect</h3>
       <ul>
         <li>Account information (the App has no sign-up): name, address, phone number, date of birth, gender, email address.</li>
         <li>Advertising identifiers (IDFA / Advertising ID).</li>
-        <li>Crash reports or analytics SDKs (Firebase / Crashlytics / Google Analytics / Sentry, etc.). The App embeds none of these.</li>
+        <li>Third-party crash reporting or analytics SDKs (Firebase / Crashlytics / Google Analytics / Sentry, etc.). The App embeds none of these. Diagnostic information about failures is sent only to our own server, as described in §1.7.</li>
         <li>Advertising SDKs. The App contains no advertising.</li>
       </ul>
 
@@ -267,11 +299,14 @@
         <li>Information sent under §1.2 is used solely to produce the result you asked for with that operation (titles, summaries and categories; pointers before reading; questions; seeds; related tickets and their connecting lines; search results; the monthly review; candidates found from outside).</li>
         <li>The identifiers and information in §1.3 are used solely to manage usage limits, to throttle bursts of requests, to determine your plan type, and to choose the language the AI writes in.</li>
         <li>The information in §1.6 is used solely to manage purchase status and entitlements.</li>
+        <li>The diagnostic information in §1.7 and the per-request ID in §1.3 are used solely to find and fix the causes of failures, and to notice when failures increase.</li>
         <li>We do not use any information for machine-learning training, advertising, profiling, or any other secondary purpose.</li>
       </ul>
       <p>
         <strong>Legal basis (GDPR)</strong>: processing under §1.2, §1.3 and §1.6 is necessary for the
-        performance of the service requested by the User (GDPR Art. 6(1)(b)).
+        performance of the service requested by the User (GDPR Art. 6(1)(b)). The diagnostic information in
+        §1.7 is processed on the basis of our legitimate interest in keeping the service working
+        (GDPR Art. 6(1)(f)), and is limited to items that are not linked to you.
       </p>
 
       <h2>3. External Transmission</h2>
@@ -289,8 +324,8 @@
         </tr>
         <tr>
           <td>Our server (Cloudflare Workers; edge locations worldwide, including the United States)</td>
-          <td>The information listed per feature in §1.2 (text, URLs, titles, notes, page opening lines, checkpoints, other tickets' titles and identifiers, questions, etc.); the anonymous device identifier, plan type, display language and access token listed in §1.3</td>
-          <td>Producing the results described in §2; managing usage limits</td>
+          <td>The information listed per feature in §1.2 (text, URLs, titles, notes, page opening lines, checkpoints, other tickets' titles and identifiers, questions, etc.); the anonymous device identifier, plan type, display language, access token and per-request ID listed in §1.3; the diagnostic information in §1.7</td>
+          <td>Producing the results described in §2; managing usage limits; investigating failures</td>
         </tr>
         <tr>
           <td>RevenueCat, Inc. (United States)</td>
@@ -391,7 +426,7 @@
           <strong>Cloudflare, Inc.</strong> (United States)
           <ul>
             <li>Purpose: hosting our stateless server (Cloudflare Workers).</li>
-            <li>We do not store the text of your tickets on Cloudflare. What we store there is limited to the counters and logs described in §5.2.</li>
+            <li>We do not store the text of your tickets on Cloudflare. What we store there is limited to the counters, logs and diagnostic information described in §5.2.</li>
           </ul>
         </li>
         <li>
@@ -472,7 +507,13 @@
         <li>
           For operational monitoring and cost management, we log the request path, HTTP status, error type,
           hashed identifier, timestamp, and numbers such as counts, durations and token usage to Cloudflare's
-          logs. Ticket text, titles, notes, checkpoints, URLs and search requests are not logged.
+          logs. Ticket text, titles, notes, checkpoints, URLs and search requests are not logged. When the App
+          attaches a per-request ID (§1.3), that ID is logged as well.
+        </li>
+        <li>
+          The diagnostic information in §1.7 is stored in Cloudflare Workers Analytics Engine. It is kept for
+          three months and then deleted automatically. We count failures over the last 15 minutes by kind of
+          operation and kind of reason, and when there are many, send only those counts to our own Slack.
         </li>
       </ul>
 
@@ -512,6 +553,10 @@
         <li>
           Content received through the share sheet that has not yet become a ticket (§5.1). It is picked up
           the next time you open the App, after which that holding file is empty.
+        </li>
+        <li>
+          Diagnostic information not yet sent (§1.7; it contains no ticket text, titles or URL paths). It is
+          sent the next time a request reaches our server, and is then removed from your device.
         </li>
       </ul>
       <p>
@@ -568,7 +613,7 @@
           as plain text or in Markdown, through the operating system's share feature. Because we retain no
           data server-side, there is no data for us to provide.
         </li>
-        <li><strong>Restriction and objection</strong>: if you do not wish the transmissions described in §1.2 to occur, do not perform the operations listed there. Placing a ticket, and picking earlier tickets about the same thing right after it, happen every time you place a ticket. Unless you perform those operations, no ticket text is transmitted to our server.</li>
+        <li><strong>Restriction and objection</strong>: if you do not wish the transmissions described in §1.2 to occur, do not perform the operations listed there. Placing a ticket, and picking earlier tickets about the same thing right after it, happen every time you place a ticket. Unless you perform those operations, no ticket text is transmitted to our server. The diagnostic information in §1.7 is created only when an operation in §1.2 fails. Because it is not linked to you, we cannot single out a particular User's diagnostic information to disclose or delete it; it is deleted automatically three months after it is stored (§5.2).</li>
         <li><strong>Complaints</strong>: contact us using the address in §9 with any complaint regarding this Policy or our handling of your information.</li>
         <li><strong>Regulatory complaints</strong>: EEA / UK users may lodge a complaint with their local data protection authority; users in Japan may contact the Personal Information Protection Commission.</li>
       </ul>
