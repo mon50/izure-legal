@@ -22,6 +22,8 @@
   - すべて削除の挙動: src/adapters/storage/drizzle-storage-adapter.ts deleteAllUserData（物理削除 + VACUUM）
   - 旧版の残りの消去: src/adapters/storage/migrations.ts の 0018_purge_soft_deleted_rows / 0026_drop_memory_catchups / 0027_drop_memory_digs
   - 予約通知の取り消し: src/features/today/delete-all-flow.ts
+  - すべて削除で消える端末の印（はじめの案内の済み印・やってみるの進み具合）: src/features/today/use-settings-actions.ts performDeleteAll
+  - すべて削除は課金状態に触れない（購読は続く）: 同上 / drizzle-storage-adapter.ts deleteAllUserData
   - URL 取得: ai-backend/url-context.ts / ai-backend/robots.ts
   - 共有シート: plugins/with-share-receiver.cjs / src/features/share/share-inbox.ts
   - 書き出す: src/features/export/export-share.ts（端末内で作り OS の共有へ渡す。サーバーへは送らない）
@@ -413,12 +415,15 @@
       <p>次のものは「すべて削除」の対象ではありません。</p>
       <ul>
         <li>端末内に残る操作の記録（削除および半券の種別変更・完了について、操作の種別、対象の識別子、件数、時刻）。本文・題・要約・テーマのラベル・URL は含みません。</li>
-        <li>OS の安全な保管領域に保存した設定、画面の表示に用いる状態、匿名の端末識別子、課金状態のキャッシュ。匿名の端末識別子は回数の上限の管理（§5.2）に用いるため、残します。</li>
+        <li>OS の安全な保管領域に保存した設定、匿名の端末識別子、課金状態のキャッシュ。匿名の端末識別子は回数の上限の管理（§5.2）に用いるため、残します。ただし、はじめの案内を見終えた印と「やってみる」の進み具合は消え、次に開いたときは最初から表示されます。</li>
         <li>共有シートから受け取り、まだ半券にしていない預かりファイル（§5.1）。次に本アプリを開いたときに引き取られ、預かりファイルは空になります。</li>
         <li>まだ送っていない診断情報（§1.7。本文・題・URL のパス等は含みません）。次にサーバーへ届いたときに送られ、端末から消えます。</li>
       </ul>
       <p>
         また、「すべて削除」を実行すると、本アプリが OS に予約していた通知はすべて取り消されます。
+      </p>
+      <p>
+        「すべて削除」を実行しても、本プランのサブスクリプションは解約されず、課金も止まりません。解約は各ストアの設定から行います（利用規約 §8）。アンインストールした場合も同じです。
       </p>
       <p>
         端末内のデータをすべて消去するには、<strong>本アプリをアンインストールしてください</strong>。当方のサーバーは §5.2 のとおり本文を保持していないため、当方に対する削除の請求は要りません。

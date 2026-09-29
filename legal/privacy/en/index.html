@@ -16,7 +16,9 @@
   - Links never fetched: ai-backend/unseen-link.ts (Instagram, Facebook, Threads, TikTok)
   - Web search: ai-backend/openai-llm-client.ts searchWeb (OpenAI web search); candidates verified by one fetch each
   - On-device storage: src/adapters/storage/schema.ts / src/adapters/config/secure-store-*.ts
-  - "Delete All": src/adapters/storage/drizzle-storage-adapter.ts deleteAllUserData (physical delete + VACUUM)
+  - "Delete everything": src/adapters/storage/drizzle-storage-adapter.ts deleteAllUserData (physical delete + VACUUM)
+    It never touches purchase status (the subscription continues); src/features/today/use-settings-actions.ts
+    performDeleteAll also clears the onboarding-completed flag and "Try it" progress.
   - Export: src/features/export/export-share.ts (built on device, handed to the OS share sheet)
 
   2026-09-26: Gemini (ai-backend/media-reader.ts) no longer processes user data. Placing uses probe mode (no Gemini call);
@@ -516,9 +518,9 @@
         </li>
       </ul>
 
-      <h3>5.3 What "Delete All" Actually Does</h3>
+      <h3>5.3 What "Delete everything" Actually Does</h3>
       <p>
-        When you run "Delete All" in the App's settings, the following are <strong>deleted as rows</strong>
+        When you run "Delete everything" in the App's settings, the following are <strong>deleted as rows</strong>
         from the on-device database. They are not merely marked as deleted and excluded from further use.
       </p>
       <ul>
@@ -537,7 +539,7 @@
         it fails, the App tries again at the next deletion. Even when the rewrite does not happen, the space
         the deleted rows occupied has already been overwritten with zeros, as described above.
       </p>
-      <p>The following are not covered by "Delete All."</p>
+      <p>The following are not covered by "Delete everything."</p>
       <ul>
         <li>
           The on-device record of operations (for deletions, and for changes of ticket type and completion:
@@ -545,9 +547,10 @@
           text, titles, summaries, theme labels or URLs.
         </li>
         <li>
-          Settings, display state, the anonymous device identifier and the cached purchase status held in the
-          operating system's secure storage. The anonymous device identifier is kept because it is used to
-          manage usage limits (§5.2).
+          Settings, the anonymous device identifier and the cached purchase status held in the operating
+          system's secure storage. The anonymous device identifier is kept because it is used to manage usage
+          limits (§5.2). However, the record that you finished the first-run guide and your progress in
+          "Try it" are cleared, so both start from the beginning the next time you open the App.
         </li>
         <li>
           Content received through the share sheet that has not yet become a ticket (§5.1). It is picked up
@@ -559,8 +562,12 @@
         </li>
       </ul>
       <p>
-        Running "Delete All" also cancels every notification the App had scheduled with the operating
+        Running "Delete everything" also cancels every notification the App had scheduled with the operating
         system.
+      </p>
+      <p>
+        Running "Delete everything" does not cancel your subscription to the Plan, and billing continues. To cancel,
+        use your store's subscription settings (Terms of Use §8). The same applies if you uninstall the App.
       </p>
       <p>
         To erase all on-device data, <strong>uninstall the App</strong>. Because our server does not retain
@@ -604,7 +611,7 @@
       <p>You have the following rights with respect to your information:</p>
       <ul>
         <li><strong>Access</strong>: every ticket and everything the App has generated that is stored on your device can be viewed in the App. Because we hold no copy on our servers, there is no further information for us to disclose.</li>
-        <li><strong>Deletion</strong>: use "Delete All" in the App's settings, or uninstall the App. The difference between the two is described in §5.3.</li>
+        <li><strong>Deletion</strong>: use "Delete everything" in the App's settings, or uninstall the App. The difference between the two is described in §5.3.</li>
         <li><strong>Correction</strong>: on-device tickets can be corrected using the App's edit features (where available), or by deleting a ticket and placing it again.</li>
         <li>
           <strong>Data portability (GDPR Art. 20)</strong>: your data resides on your own device and we hold
