@@ -25,6 +25,10 @@
   shiori and stack-find pass no media reader. Only the weekly /canary check sends one author-chosen public video to Gemini.
   Google LLC was therefore removed from the processors.
 
+  2026-11-26 (minor revision; basis: accuracy of the matters published under APPI Art. 21 and 32): a share-sheet holding file
+  that cannot be read is no longer deleted; it stays on the device and is read again next time (src/features/share/share-inbox.ts).
+  Stated in §1.5 and §5.3. Recipients, transmitted information and off-device storage are unchanged.
+
   The plan name "Izure Pro" is a placeholder; replace it everywhere once the final name is decided.
 -->
 <html lang="en">
@@ -230,7 +234,9 @@
         App's own screen does not open; the shared string is held temporarily in a file on your device (on iOS, in an on-device area shared by the App and its share-menu receiver).
         The next time you open or return to the App, that file is read, the content is saved as a ticket in
         the on-device database, and it is transmitted to our server as a "placing a ticket" operation under
-        §1.2. Once read, the holding file is deleted.
+        §1.2. Once read, the holding file is deleted. If the file cannot be read (for example, because of a
+        temporary problem on the device), it is not deleted: it stays on your device, and the App tries to read it
+        again the next time you open or return to the App.
       </p>
       <p>
         Where the sharing app supplies a subject line (Android's <code>EXTRA_SUBJECT</code>) that duplicates
@@ -554,7 +560,8 @@
         </li>
         <li>
           Content received through the share sheet that has not yet become a ticket (§5.1). It is picked up
-          the next time you open the App, after which that holding file is empty.
+          the next time you open the App, after which that holding file is empty. A holding file that could not
+          be read stays on your device and is read again the next time you open the App (§1.5).
         </li>
         <li>
           Diagnostic information not yet sent (§1.7; it contains no ticket text, titles or URL paths). It is
@@ -651,7 +658,7 @@
         for the conditions of use, see the <a href="../../terms/en/">Terms of Service</a>.
       </p>
 
-      <footer class="revisions">Established September 26, 2026.</footer>
+      <footer class="revisions">Established September 26, 2026.<br />Revised November 26, 2026 (§1.5 and §5.3: how a share-sheet holding file that could not be read is handled).</footer>
       <footer class="bottom">© Izure / Sota Sugiyama</footer>
     </main>
   </body>
